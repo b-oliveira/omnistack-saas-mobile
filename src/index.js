@@ -1,9 +1,20 @@
 import React from 'react';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
 
+import '~/config/ReactotronConfig';
 import '~/config/StatusBarConfig';
 
-import Routes from './routes';
+import { store, persistor } from './store';
 
-const App = () => <Routes />;
+import App from './App';
 
-export default App;
+export default function Root() {
+  return (
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <App />
+      </PersistGate>
+    </Provider>
+  );
+}
