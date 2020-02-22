@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TextInput, TouchableOpacity } from 'react-native';
+import { Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 
 import api from '~/services/api';
 
@@ -15,7 +15,11 @@ export default function NewTeam({ visible, onRequestClose }) {
       const response = await api.post('teams', { name });
 
       onRequestClose(response.data);
-    } catch (err) {}
+
+      Alert.alert('Novo Time', 'Time criado com sucesso!');
+    } catch (err) {
+      Alert.alert('Novo Time', err.message);
+    }
   }
 
   return (

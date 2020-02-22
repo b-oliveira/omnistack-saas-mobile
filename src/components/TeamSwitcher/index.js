@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { View, TouchableOpacity, Image } from 'react-native';
+import { View, TouchableOpacity, Image, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import api from '~/services/api';
@@ -23,7 +23,9 @@ export default function TeamSwitcher() {
         const response = await api.get('teams');
 
         setTeams(response.data);
-      } catch (err) {}
+      } catch (err) {
+        Alert.alert('Times', err.message);
+      }
     }
 
     loadTeams();

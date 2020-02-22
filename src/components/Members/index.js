@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList, TouchableOpacity } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import api from '~/services/api';
@@ -17,7 +17,9 @@ export default function Members() {
       const response = await api.get('members');
 
       setMembers(response.data);
-    } catch (err) {}
+    } catch (err) {
+      Alert.alert('Membros', err.message);
+    }
   }
 
   useEffect(() => {

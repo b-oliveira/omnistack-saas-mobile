@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, TextInput, TouchableOpacity } from 'react-native';
+import { Text, TextInput, TouchableOpacity, Alert } from 'react-native';
 
 import api from '~/services/api';
 
@@ -16,8 +16,12 @@ export default function InviteMember({ visible, onRequestClose }) {
 
       onRequestClose();
 
+      Alert.alert('Convite', 'Convite realizado com sucesso!');
+
       setEmail();
-    } catch (err) {}
+    } catch (err) {
+      Alert.alert('Convite', err.message);
+    }
   }
 
   return (
