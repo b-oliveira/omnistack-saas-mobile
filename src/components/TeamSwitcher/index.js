@@ -7,10 +7,13 @@ import api from '~/services/api';
 
 import { setCurrentTeam } from '~/store/modules/team/actions';
 
+import NewTeam from '~/components/NewTeam';
+
 import styles from './styles';
 
 export default function TeamSwitcher() {
   const [teams, setTeams] = useState([]);
+  const [newTeam, setNewTeam] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -30,6 +33,12 @@ export default function TeamSwitcher() {
     dispatch(setCurrentTeam(team));
   }
 
+  function handleCloseModal(team) {
+    if (team) setTeams([...teams, team]);
+
+    setNewTeam(false);
+  }
+
   return (
     <View style={styles.container}>
       {teams.map(team => (
@@ -43,12 +52,14 @@ export default function TeamSwitcher() {
             source={{
               uri: `https://ui-avatars.com/api/?font-size=0.33&background=7159c1&color=fff&name=${team.name}`,
             }}
-          ></Image>
+          />
         </TouchableOpacity>
       ))}
-      <TouchableOpacity style={styles.newTeam} onPress={() => {}}>
+      <TouchableOpacity style={styles.newTeam} onPress={() => setNewTeam(true)}>
         <Icon name="add" size={24} color="#999" />
       </TouchableOpacity>
+
+      <NewTeam visible={newTeam} onRequestClose={handleCloseModal} />
     </View>
   );
 }
