@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import SideMenu from 'react-native-side-menu';
 
 import TeamSwitcher from '~/components/TeamSwitcher';
+import Projects from '~/components/Projects';
 
 import styles from './styles';
 
@@ -40,6 +41,7 @@ export default function Main() {
               <Icon name="group" size={24} color="#fff"></Icon>
             </TouchableOpacity>
           </View>
+          <Projects />
         </View>
       </SideMenu>
     </View>
