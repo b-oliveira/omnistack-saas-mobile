@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { View, TouchableOpacity, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SideMenu from 'react-native-side-menu';
@@ -9,6 +10,8 @@ import styles from './styles';
 
 export default function Main() {
   const [showTeams, setShowTeams] = useState(false);
+
+  const { currentTeam } = useSelector(state => state.team);
 
   return (
     <View style={styles.backgroundWrapper}>
@@ -27,7 +30,9 @@ export default function Main() {
             >
               <Icon name="menu" size={24} color="#fff"></Icon>
             </TouchableOpacity>
-            <Text style={styles.teamTitle}>Selecione um time</Text>
+            <Text style={styles.teamTitle}>
+              {currentTeam ? currentTeam.name : 'Selecione um time'}
+            </Text>
             <TouchableOpacity
               hitSlop={{ top: 5, bottom: 5, left: 10, right: 10 }}
               onPress={() => {}}

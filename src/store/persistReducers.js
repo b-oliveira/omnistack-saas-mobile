@@ -6,7 +6,7 @@ export default reducers => {
     {
       key: 'saas',
       storage: AsyncStorage,
-      whitelist: ['auth'],
+      whitelist: ['auth', 'team'],
     },
     reducers
   );
