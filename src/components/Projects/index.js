@@ -5,10 +5,13 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import api from '~/services/api';
 
+import NewProject from '~/components/NewProject';
+
 import styles from './styles';
 
 export default function Projects() {
   const [projects, setProjects] = useState([]);
+  const [newProject, setNewProject] = useState(false);
 
   const { currentTeam } = useSelector(state => state.team);
 
@@ -26,6 +29,12 @@ export default function Projects() {
     loadProjects();
   }, [currentTeam]);
 
+  function handleCloseModal(project) {
+    if (project) setProjects([...projects, project]);
+
+    setNewProject(false);
+  }
+
   return (
     currentTeam && (
       <View style={styles.container}>
@@ -40,9 +49,14 @@ export default function Projects() {
           )}
         />
 
-        <TouchableOpacity style={styles.newProjectButton} onPress={() => {}}>
+        <TouchableOpacity
+          style={styles.newProjectButton}
+          onPress={() => setNewProject(true)}
+        >
           <Icon name="add" size={28} color="#fff" />
         </TouchableOpacity>
+
+        <NewProject visible={newProject} onRequestClose={handleCloseModal} />
       </View>
     )
   );
