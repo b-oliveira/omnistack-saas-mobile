@@ -4,10 +4,13 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 import api from '~/services/api';
 
+import InviteMember from '~/components/InviteMember';
+
 import styles from './styles';
 
 export default function Members() {
   const [members, setMembers] = useState([]);
+  const [newInviteMember, setNewInviteMember] = useState(false);
 
   async function handleLoadMembers() {
     try {
@@ -42,10 +45,18 @@ export default function Members() {
           </View>
         )}
         ListFooterComponent={() => (
-          <TouchableOpacity style={styles.button} onPress={() => {}}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => setNewInviteMember(true)}
+          >
             <Text style={styles.buttonText}>Convidar</Text>
           </TouchableOpacity>
         )}
+      />
+
+      <InviteMember
+        visible={newInviteMember}
+        onRequestClose={() => setNewInviteMember(false)}
       />
     </View>
   );
