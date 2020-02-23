@@ -6,6 +6,7 @@ import api from '~/services/api';
 
 import InviteMember from '~/components/InviteMember';
 import RoleUpdater from '~/components/RoleUpdater';
+import Can from '~/components/Can';
 
 import styles from './styles';
 
@@ -49,12 +50,14 @@ export default function Members() {
           </View>
         )}
         ListFooterComponent={() => (
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => setNewInviteMember(true)}
-          >
-            <Text style={styles.buttonText}>Convidar</Text>
-          </TouchableOpacity>
+          <Can permission="invites_create">
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => setNewInviteMember(true)}
+            >
+              <Text style={styles.buttonText}>Convidar</Text>
+            </TouchableOpacity>
+          </Can>
         )}
       />
 

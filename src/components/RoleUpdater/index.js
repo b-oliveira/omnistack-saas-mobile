@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, Switch, Alert } from 'react-native';
 import api from '~/services/api';
 
 import Modal from '~/components/Modal';
+import Can from '~/components/Can';
 
 import styles from './styles';
 
@@ -53,12 +54,19 @@ export default function RoleUpdater({ member, onRequestClose }) {
             <View key={role.id} style={styles.roleContainer}>
               <Text style={styles.roleText}>{role.name}</Text>
 
-              <Switch
-                value={
-                  !!rolesMember.find(memberRole => memberRole.id === role.id)
-                }
-                onValueChange={value => handleRoleChange(role, value)}
-              />
+              <Can role="administrator">
+                {can => (
+                  <Switch
+                    value={
+                      !!rolesMember.find(
+                        memberRole => memberRole.id === role.id
+                      )
+                    }
+                    disabled={!can}
+                    onValueChange={value => handleRoleChange(role, value)}
+                  />
+                )}
+              </Can>
             </View>
           ))}
         </View>
