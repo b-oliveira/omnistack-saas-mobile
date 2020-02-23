@@ -5,26 +5,28 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import api from '~/services/api';
 
 import InviteMember from '~/components/InviteMember';
+import RoleUpdater from '~/components/RoleUpdater';
 
 import styles from './styles';
 
 export default function Members() {
   const [members, setMembers] = useState([]);
   const [newInviteMember, setNewInviteMember] = useState(false);
-
-  async function handleLoadMembers() {
-    try {
-      const response = await api.get('members');
-
-      setMembers(response.data);
-    } catch (err) {
-      Alert.alert('Membros', err.message);
-    }
-  }
+  const [selectedMember, setSelectedMember] = useState();
 
   useEffect(() => {
-    handleLoadMembers();
-  }, []);
+    async function handleLoadMembers() {
+      try {
+        const response = await api.get('members');
+
+        setMembers(response.data);
+      } catch (err) {
+        Alert.alert('Membros', err.message);
+      }
+    }
+
+    if (!selectedMember) handleLoadMembers();
+  }, [selectedMember]);
 
   return (
     <View style={styles.container}>
@@ -40,7 +42,7 @@ export default function Members() {
 
             <TouchableOpacity
               hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}
-              onPress={() => {}}
+              onPress={() => setSelectedMember(item)}
             >
               <Icon name="settings" size={20} color="#b0b0b0" />
             </TouchableOpacity>
@@ -56,10 +58,19 @@ export default function Members() {
         )}
       />
 
-      <InviteMember
-        visible={newInviteMember}
-        onRequestClose={() => setNewInviteMember(false)}
-      />
+      {newInviteMember && (
+        <InviteMember
+          visible={newInviteMember}
+          onRequestClose={() => setNewInviteMember(false)}
+        />
+      )}
+
+      {selectedMember && (
+        <RoleUpdater
+          member={selectedMember}
+          onRequestClose={() => setSelectedMember()}
+        />
+      )}
     </View>
   );
 }
