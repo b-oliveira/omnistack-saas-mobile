@@ -4,7 +4,7 @@ export default function Can({ children, role, permission }) {
   const { roles, permissions } = useSelector(state => state.team);
 
   function checkAccessRules() {
-    if (!role && !role) return false;
+    if (!role && !permission) return false;
 
     if (role && !roles.includes(role)) return false;
 
